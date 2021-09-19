@@ -1,10 +1,27 @@
+using ApiBureau.CloudCall.Api.Console.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading.Tasks;
+
 namespace ApiBureau.CloudCall.Api.Console
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            System.Console.WriteLine("Hello World!");
+            var services = new ServiceCollection();
+
+            var startup = new Startup();
+
+            startup.ConfigureServices(services);
+
+            var serviceProvider = services.BuildServiceProvider();
+
+            var dataService = serviceProvider.GetService<DataService>()
+                ?? throw new ArgumentNullException($"{nameof(DataService)} cannot be null");
+
+
+            await dataService.GetStatusAsync();
         }
     }
 }

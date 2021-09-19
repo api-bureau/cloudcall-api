@@ -30,6 +30,7 @@ namespace ApiBureau.CloudCall
             {
                 UserName = _settings.UserName,
                 Password = _settings.Password,
+                Address = _settings.BaseUrl + "/auth/login" 
             };
 
             var token = await _client.RequestPasswordTokenAsync(request);
