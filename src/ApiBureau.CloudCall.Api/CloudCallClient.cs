@@ -22,6 +22,8 @@ namespace ApiBureau.CloudCall
         {
             _settings = settings.Value;
             _client = client;
+
+            _client.DefaultRequestHeaders.Add("LicenseKey", _settings.LicenseKey);
         }
 
         public async Task AuthenticateAsync()
