@@ -1,11 +1,10 @@
-using ApiBureau.CloudCall.Api;
 using IdentityModel.Client;
 using Microsoft.Extensions.Options;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace ApiBureau.CloudCall
+namespace ApiBureau.CloudCall.Api
 {
     public class CloudCallClient
     {
