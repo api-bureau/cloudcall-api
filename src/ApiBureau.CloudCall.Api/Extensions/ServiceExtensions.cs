@@ -10,7 +10,7 @@ namespace ApiBureau.CloudCall.Api.Extensions
     {
         public static IServiceCollection AddCloudCall(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<CloudCallClient>(options => configuration.GetSection(nameof(CloudCallClient)).Bind(options));
+            services.Configure<CloudCallSettings>(options => configuration.GetSection(nameof(CloudCallSettings)).Bind(options));
 
             services.AddHttpClient<CloudCallClient>()
                 .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(20))
