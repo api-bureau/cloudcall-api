@@ -1,8 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
-using System;
-using System.Net.Http;
 
 namespace ApiBureau.CloudCall.Api.Extensions
 {
