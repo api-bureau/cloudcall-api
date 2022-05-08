@@ -72,8 +72,8 @@ public class CallDto
     public int? ContactId { get; set; }
     public int? Leg { get; set; }
     //public object Category { get; set; }
-    public ContactDto Contact { get; set; } = new ContactDto();
-    public CallDetailDto CallDetail { get; set; } = new CallDetailDto();
+    public ContactDto? Contact { get; set; }
+    public CallDetailDto? CallDetail { get; set; } = new CallDetailDto();
 
     //public List<string> CallRecordingUrLs { get; set; } = new List<string>();
 }
