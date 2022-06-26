@@ -1,7 +1,5 @@
 using ApiBureau.CloudCall.Api.Console.Services;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Threading.Tasks;
 
 namespace ApiBureau.CloudCall.Api.Console
 {
@@ -21,7 +19,7 @@ namespace ApiBureau.CloudCall.Api.Console
                 ?? throw new ArgumentNullException($"{nameof(DataService)} cannot be null");
 
 
-            await dataService.GetStatusAsync();
+            await dataService.RunAsync();
         }
     }
 }

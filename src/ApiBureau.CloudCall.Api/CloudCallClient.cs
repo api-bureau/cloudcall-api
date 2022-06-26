@@ -1,8 +1,5 @@
 using IdentityModel.Client;
-using Microsoft.Extensions.Options;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading.Tasks;
+using System.Net.Http.Json;
 
 namespace ApiBureau.CloudCall.Api
 {
@@ -17,12 +14,16 @@ namespace ApiBureau.CloudCall.Api
             PropertyNameCaseInsensitive = true,
         };
 
+        public AcccountEndpoint Accounts { get; set; }
+
         public CloudCallClient(IOptions<CloudCallSettings> settings, HttpClient client)
         {
             _settings = settings.Value;
             _client = client;
 
             _client.DefaultRequestHeaders.Add("LicenseKey", _settings.LicenseKey);
+
+            Accounts = new AcccountEndpoint(this);
         }
 
         public async Task AuthenticateAsync()
@@ -31,16 +32,40 @@ namespace ApiBureau.CloudCall.Api
             {
                 UserName = _settings.UserName,
                 Password = _settings.Password,
-                Address = _settings.BaseUrl + "/auth/login" 
+                Address = _settings.LoginUrl,
+                Parameters =
+                {
+                    { "type", "customer" }
+                }
             };
 
             var token = await _client.RequestPasswordTokenAsync(request);
 
             if (token is null) return;
 
-            _accessToken = token.AccessToken;
+            // this is not working token.AccessToken;
+            //_accessToken = token.AccessToken;
+
+            _accessToken = token.Json.GetProperty("data").TryGetString("token");
 
             _client.SetBearerToken(_accessToken);
+        }
+
+        public async Task<T?> GetAsync<T>(string url)
+        {
+            await CheckConnectionAsync();
+
+            return await _client.GetFromJsonAsync<T>($"{_settings.BaseUrl}/customers/{_settings.UserName}/{url}");
+        }
+
+        private async Task CheckConnectionAsync()
+        {
+            //ToDo Check Expiry Time
+
+            if (_accessToken == null)
+            {
+                await AuthenticateAsync();
+            }
         }
     }
 }

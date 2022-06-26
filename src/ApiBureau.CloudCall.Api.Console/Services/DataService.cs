@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
 namespace ApiBureau.CloudCall.Api.Console.Services
 {
@@ -14,8 +13,13 @@ namespace ApiBureau.CloudCall.Api.Console.Services
             _logger = logger;
         }
 
-        public async Task GetStatusAsync()
+        public async Task RunAsync()
         {
+
+            //await _client.AuthenticateAsync();
+
+            var accounts = await _client.Accounts.GetAsync();
+
             //var dto = await _client.Skills.GetStatusAsync();
 
             //if (dto.IsSuccess)
