@@ -20,6 +20,8 @@ namespace ApiBureau.CloudCall.Api.Console.Services
 
             var accounts = await _client.Accounts.GetAsync();
 
+            _logger.LogInformation("Items: {0}", accounts.Count());
+
             //var dto = await _client.Skills.GetStatusAsync();
 
             //if (dto.IsSuccess)

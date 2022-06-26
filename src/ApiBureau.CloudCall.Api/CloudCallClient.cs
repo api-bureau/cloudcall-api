@@ -8,6 +8,7 @@ namespace ApiBureau.CloudCall.Api
         private readonly CloudCallSettings _settings;
         private readonly HttpClient _client;
         private string? _accessToken;
+        private const int _pageSize = 1000;
         //private DateTime? _tokenExpireTime;
         private static JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
         {
@@ -15,6 +16,7 @@ namespace ApiBureau.CloudCall.Api
         };
 
         public AcccountEndpoint Accounts { get; set; }
+        public CallEndpoint Calls { get; set; }
 
         public CloudCallClient(IOptions<CloudCallSettings> settings, HttpClient client)
         {
@@ -24,6 +26,7 @@ namespace ApiBureau.CloudCall.Api
             _client.DefaultRequestHeaders.Add("LicenseKey", _settings.LicenseKey);
 
             Accounts = new AcccountEndpoint(this);
+            Calls = new CallEndpoint(this);
         }
 
         public async Task AuthenticateAsync()
@@ -56,6 +59,13 @@ namespace ApiBureau.CloudCall.Api
             await CheckConnectionAsync();
 
             return await _client.GetFromJsonAsync<T>($"{_settings.BaseUrl}/customers/{_settings.UserName}/{url}");
+        }
+
+        public async Task<T?> GetCallsAsync<T>(string url)
+        {
+            await CheckConnectionAsync();
+
+            return await _client.GetFromJsonAsync<T>($"{_settings.BaseUrl}/customers/{_settings.UserName}/{url}&leg=c");
         }
 
         private async Task CheckConnectionAsync()
