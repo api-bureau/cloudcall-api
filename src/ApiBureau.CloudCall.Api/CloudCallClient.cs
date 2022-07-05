@@ -1,81 +1,19 @@
-using IdentityModel.Client;
-using System.Net.Http.Json;
+using ApiBureau.CloudCall.Api.Endpoints;
 
-namespace ApiBureau.CloudCall.Api
+namespace ApiBureau.CloudCall.Api;
+
+public class CloudCallClient
 {
-    public class CloudCallClient
+    private readonly HttpHelper _httpHelper;
+
+    public AcccountEndpoint Accounts { get; set; }
+    public CallEndpoint Calls { get; set; }
+
+    public CloudCallClient(HttpClient client, IOptions<CloudCallSettings> settings)
     {
-        private readonly CloudCallSettings _settings;
-        private readonly HttpClient _client;
-        private string? _accessToken;
-        private const int _pageSize = 1000;
-        //private DateTime? _tokenExpireTime;
-        private static JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true,
-        };
+        _httpHelper = new HttpHelper(client, settings);
 
-        public AcccountEndpoint Accounts { get; set; }
-        public CallEndpoint Calls { get; set; }
-
-        public CloudCallClient(IOptions<CloudCallSettings> settings, HttpClient client)
-        {
-            _settings = settings.Value;
-            _client = client;
-
-            _client.DefaultRequestHeaders.Add("LicenseKey", _settings.LicenseKey);
-
-            Accounts = new AcccountEndpoint(this);
-            Calls = new CallEndpoint(this);
-        }
-
-        public async Task AuthenticateAsync()
-        {
-            var request = new PasswordTokenRequest
-            {
-                UserName = _settings.UserName,
-                Password = _settings.Password,
-                Address = _settings.LoginUrl,
-                Parameters =
-                {
-                    { "type", "customer" }
-                }
-            };
-
-            var token = await _client.RequestPasswordTokenAsync(request);
-
-            if (token is null) return;
-
-            // this is not working token.AccessToken;
-            //_accessToken = token.AccessToken;
-
-            _accessToken = token.Json.GetProperty("data").TryGetString("token");
-
-            _client.SetBearerToken(_accessToken);
-        }
-
-        public async Task<T?> GetAsync<T>(string url)
-        {
-            await CheckConnectionAsync();
-
-            return await _client.GetFromJsonAsync<T>($"{_settings.BaseUrl}/customers/{_settings.UserName}/{url}");
-        }
-
-        public async Task<T?> GetCallsAsync<T>(string url)
-        {
-            await CheckConnectionAsync();
-
-            return await _client.GetFromJsonAsync<T>($"{_settings.BaseUrl}/customers/{_settings.UserName}/{url}&leg=c");
-        }
-
-        private async Task CheckConnectionAsync()
-        {
-            //ToDo Check Expiry Time
-
-            if (_accessToken == null)
-            {
-                await AuthenticateAsync();
-            }
-        }
+        Accounts = new AcccountEndpoint(_httpHelper);
+        Calls = new CallEndpoint(_httpHelper);
     }
 }

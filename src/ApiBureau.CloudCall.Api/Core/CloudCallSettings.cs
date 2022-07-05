@@ -1,4 +1,4 @@
-namespace ApiBureau.CloudCall.Api
+namespace ApiBureau.CloudCall.Api.Core
 {
     public class CloudCallSettings
     {
