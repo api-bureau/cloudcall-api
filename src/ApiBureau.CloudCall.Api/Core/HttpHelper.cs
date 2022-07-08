@@ -19,6 +19,7 @@ public class HttpHelper
     {
         _settings = settings.Value;
         _client = httpClient;
+
         _client.DefaultRequestHeaders.Add("LicenseKey", _settings.LicenseKey);
     }
 
