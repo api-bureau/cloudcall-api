@@ -1,9 +1,9 @@
 using IdentityModel.Client;
 using System.Net.Http.Json;
 
-namespace ApiBureau.CloudCall.Api.Core;
+namespace ApiBureau.CloudCall.Api.Http;
 
-public class HttpHelper
+public class ApiConnection
 {
     private readonly HttpClient _client;
     private readonly CloudCallSettings _settings;
@@ -15,7 +15,7 @@ public class HttpHelper
     //    PropertyNameCaseInsensitive = true,
     //};
 
-    public HttpHelper(HttpClient httpClient, IOptions<CloudCallSettings> settings)
+    public ApiConnection(HttpClient httpClient, IOptions<CloudCallSettings> settings)
     {
         _settings = settings.Value;
         _client = httpClient;
@@ -67,8 +67,6 @@ public class HttpHelper
         //ToDo Check Expiry Time
 
         if (_accessToken == null)
-        {
             await AuthenticateAsync();
-        }
     }
 }
