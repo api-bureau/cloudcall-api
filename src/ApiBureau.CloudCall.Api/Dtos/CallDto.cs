@@ -13,6 +13,11 @@ public class CallDto
     [JsonPropertyName("i_account")]
     public int IAccount { get; set; }
 
+    /// <summary>
+    /// This is linked to AccountNumber in AccountDto
+    /// </summary>
+    public string AccountId { get; set; } = null!;
+
     //public bool CallRecordingDeleted { get; set; }
     public bool CallRecordingAvailable { get; set; }
     public bool Mp3RecordingAvailable { get; set; }
