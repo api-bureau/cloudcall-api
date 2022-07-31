@@ -55,12 +55,12 @@ public class ApiConnection
         return await _client.GetFromJsonAsync<T>($"{_settings.BaseUrl}/customers/{_settings.UserName}/{url}");
     }
 
-    public async Task<T?> GetCallsAsync<T>(string url)
-    {
-        await CheckConnectionAsync();
+    //public async Task<T?> GetCallsAsync<T>(string url)
+    //{
+    //    await CheckConnectionAsync();
 
-        return await _client.GetFromJsonAsync<T>($"{_settings.BaseUrl}/customers/{_settings.UserName}/{url}&leg=c");
-    }
+    //    return await _client.GetFromJsonAsync<T>($"{_settings.BaseUrl}/customers/{_settings.UserName}/{url}&leg=c");
+    //}
 
     private async Task CheckConnectionAsync()
     {

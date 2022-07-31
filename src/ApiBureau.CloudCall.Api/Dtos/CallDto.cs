@@ -65,7 +65,7 @@ public class CallDto
     /// Expiry Time of the call recording
     /// </summary>
     public DateTime ExpiryTime { get; set; }
-    public DateTime TransferTime { get; set; }
+    public DateTime? TransferTime { get; set; }
     //public double ChargedAmount { get; set; }
     //public int ChargedTime { get; set; }
     //public int? CategoryId { get; set; }
