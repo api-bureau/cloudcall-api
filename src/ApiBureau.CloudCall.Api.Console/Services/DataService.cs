@@ -18,7 +18,7 @@ namespace ApiBureau.CloudCall.Api.Console.Services
 
             //await _client.AuthenticateAsync();
 
-            //var items = await _client.Accounts.GetAsync();
+            var accounts = await _client.Accounts.GetAsync();
             var items = await _client.Calls.GetAsync(DateTime.Now.AddDays(-2), DateTime.Now);
 
             _logger.LogInformation("Items: {0}", items.Count());
