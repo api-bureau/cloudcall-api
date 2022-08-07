@@ -2,7 +2,7 @@ namespace ApiBureau.CloudCall.Api.Endpoints;
 
 public class AcccountEndpoint : BaseEndpoint
 {
-    private const string Endpoint = "/accounts";
+    private const string Endpoint = "accounts";
 
     public AcccountEndpoint(ApiConnection apiConnection) : base(apiConnection) { }
 
