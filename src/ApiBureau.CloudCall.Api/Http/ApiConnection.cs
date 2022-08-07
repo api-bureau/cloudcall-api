@@ -1,5 +1,6 @@
 using IdentityModel.Client;
 using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace ApiBureau.CloudCall.Api.Http;
 
@@ -52,7 +53,19 @@ public class ApiConnection
     {
         await CheckConnectionAsync();
 
-        return await _client.GetFromJsonAsync<T>($"{_settings.BaseUrl}/customers/{_settings.UserName}/{url}");
+        try
+        {
+            return await _client.GetFromJsonAsync<T>($"{_settings.BaseUrl}/customers/{_settings.UserName}/{url}");
+        }
+        catch (JsonException e) when (e.Data.Count == 0)
+        {
+            return default;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+
     }
 
     //public async Task<T?> GetCallsAsync<T>(string url)
