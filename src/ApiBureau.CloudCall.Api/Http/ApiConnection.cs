@@ -39,6 +39,11 @@ public class ApiConnection
 
         var token = await _client.RequestPasswordTokenAsync(request);
 
+        if (token.IsError)
+        {
+            throw new Exception($"{token.HttpErrorReason},{token.Raw}");
+        }
+
         if (token is null) return;
 
         // this is not working token.AccessToken;
