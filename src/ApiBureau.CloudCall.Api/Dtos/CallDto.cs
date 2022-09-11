@@ -5,7 +5,7 @@ public class CallDto
     /// <summary>
     /// Unique identifier of the call
     /// </summary>
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     /// <summary>
     /// Unique identifier of the account that the call is assigned to
@@ -79,6 +79,17 @@ public class CallDto
     //public object Category { get; set; }
     public ContactDto? Contact { get; set; }
     public CallDetailDto? CallDetail { get; set; } = new CallDetailDto();
+
+    public int Duration => (int)(DisconnectTime - ConnectTime).TotalSeconds;
+
+    public int GetNumericCrmId()
+    {
+        if (Contact is null) return 0;
+
+        _ = int.TryParse(Contact.CrmObjectInstanceId, out var crmId);
+
+        return crmId;
+    }
 
     //public List<string> CallRecordingUrLs { get; set; } = new List<string>();
 }
