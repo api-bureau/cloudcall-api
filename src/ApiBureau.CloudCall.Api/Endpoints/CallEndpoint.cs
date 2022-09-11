@@ -19,8 +19,7 @@ public class CallEndpoint : BaseEndpoint
             => await ApiConnection.GetAsync<List<CallDto>>($"{Endpoint}?from={from:u}&to={to:u}{LegC}") ?? new();
 
     /// <summary>
-    /// Returns calls in the date range, step by minutes. This can be useful if you are assuming data. You can fetch into multiple API calls e.g., daily, hourly
-    /// 
+    /// Returns calls in the date range, step by minutes. This can be useful if you are assuming lots of data. You can fetch into multiple API calls e.g., daily, hourly
     /// </summary>
     /// <param name="from"></param>
     /// <param name="to">This is might be extended if used with stepInMinutes</param>
