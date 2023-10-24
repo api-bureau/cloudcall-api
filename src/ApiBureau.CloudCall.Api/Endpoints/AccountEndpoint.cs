@@ -1,10 +1,10 @@
 namespace ApiBureau.CloudCall.Api.Endpoints;
 
-public class AcccountEndpoint : BaseEndpoint
+public class AccountEndpoint : BaseEndpoint
 {
     private const string Endpoint = "accounts";
 
-    public AcccountEndpoint(ApiConnection apiConnection) : base(apiConnection) { }
+    public AccountEndpoint(ApiConnection apiConnection) : base(apiConnection) { }
 
     /// <summary>
     /// Return all accounts
