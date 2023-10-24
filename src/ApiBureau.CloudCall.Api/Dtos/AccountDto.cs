@@ -23,6 +23,7 @@ public class AccountDto
 
     //public int i_master_account { get; set; }
     public string Login { get; set; } = default!;
+    public string? CurrentOutboundIdentity { get; set; }
 
     //public string NotificationToken { get; set; } = default!;
     //public bool OutboundIdentityHidden { get; set; }
@@ -35,4 +36,6 @@ public class AccountDto
     //public bool UnifyModeEnabled { get; set; }
     //public int VoiceCodec { get; set; }
     //public IList<object> VoicemailDropFiles { get; set; }
+
+    public string? FullName => $"{Firstname ?? ""} {Surname ?? ""}".Trim();
 }

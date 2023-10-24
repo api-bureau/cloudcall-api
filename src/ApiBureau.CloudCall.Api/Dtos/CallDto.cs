@@ -28,7 +28,7 @@ public class CallDto
     public bool Withheld { get; set; }
 
     /// <summary>
-    /// Indicates whether the call is transfered or not
+    /// Indicates whether the call is transferred or not
     /// </summary>
     public bool Transfered { get; set; }
     public bool FailedClickCall { get; set; }
@@ -39,7 +39,7 @@ public class CallDto
     public string Cld { get; set; } = null!;
 
     /// <summary>
-    /// Inbound Identitier of the call, can be the AccountId or the Default Click device
+    /// Inbound identifier of the call, can be the AccountId or the Default Click device
     /// </summary>
     public string Cli { get; set; } = null!;
 
