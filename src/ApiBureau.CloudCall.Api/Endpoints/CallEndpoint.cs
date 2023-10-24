@@ -16,7 +16,7 @@ public class CallEndpoint : BaseEndpoint
     /// <param name="to"></param>
     /// <returns></returns>
     public async Task<List<CallDto>> GetAsync(DateTime from, DateTime to)
-            => await ApiConnection.GetAsync<List<CallDto>>($"{Endpoint}?from={from:u}&to={to:u}{LegC}") ?? new();
+            => await ApiConnection.GetAsync<List<CallDto>>($"{Endpoint}?from={from:s}&to={to:s}{LegC}") ?? new();
 
     /// <summary>
     /// Returns calls in the date range, step by minutes. This can be useful if you are assuming lots of data. You can fetch into multiple API calls e.g., daily, hourly
