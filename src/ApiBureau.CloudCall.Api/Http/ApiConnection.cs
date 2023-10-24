@@ -70,7 +70,6 @@ public class ApiConnection
         {
             throw;
         }
-
     }
 
     //public async Task<T?> GetCallsAsync<T>(string url)
@@ -85,6 +84,8 @@ public class ApiConnection
         //ToDo Check Expiry Time
 
         if (_accessToken == null)
+        {
             await AuthenticateAsync();
+        }
     }
 }
