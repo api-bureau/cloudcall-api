@@ -1,4 +1,5 @@
 using IdentityModel.Client;
+using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -7,6 +8,7 @@ namespace ApiBureau.CloudCall.Api.Http;
 public class ApiConnection
 {
     private readonly HttpClient _client;
+    private readonly ILogger<ApiConnection> _logger;
     private readonly CloudCallSettings _settings;
     private string? _accessToken;
     private const int _pageSize = 1000;
@@ -16,16 +18,18 @@ public class ApiConnection
     //    PropertyNameCaseInsensitive = true,
     //};
 
-    public ApiConnection(HttpClient httpClient, IOptions<CloudCallSettings> settings)
+    public ApiConnection(HttpClient httpClient, IOptions<CloudCallSettings> settings, ILogger<ApiConnection> logger)
     {
         _settings = settings.Value;
         _client = httpClient;
-
+        _logger = logger;
         _client.DefaultRequestHeaders.Add("LicenseKey", _settings.LicenseKey);
     }
 
     public async Task AuthenticateAsync()
     {
+        CloudCallSettingsValidator.Validate(_settings, _logger);
+
         var request = new PasswordTokenRequest
         {
             UserName = _settings.UserName,

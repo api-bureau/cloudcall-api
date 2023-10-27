@@ -1,19 +1,13 @@
-using ApiBureau.CloudCall.Api.Endpoints;
-
 namespace ApiBureau.CloudCall.Api;
 
-public class CloudCallClient
+public class CloudCallClient : ICloudCallClient
 {
-    private readonly ApiConnection _apiConnection;
-
     public AccountEndpoint Accounts { get; }
     public CallEndpoint Calls { get; }
 
-    public CloudCallClient(HttpClient client, IOptions<CloudCallSettings> settings)
+    public CloudCallClient(ApiConnection apiConnection)
     {
-        _apiConnection = new ApiConnection(client, settings);
-
-        Accounts = new AccountEndpoint(_apiConnection);
-        Calls = new CallEndpoint(_apiConnection);
+        Accounts = new AccountEndpoint(apiConnection);
+        Calls = new CallEndpoint(apiConnection);
     }
 }

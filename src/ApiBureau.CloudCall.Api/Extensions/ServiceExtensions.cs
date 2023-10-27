@@ -10,9 +10,11 @@ public static class ServiceExtensions
     {
         services.Configure<CloudCallSettings>(options => configuration.GetSection(nameof(CloudCallSettings)).Bind(options));
 
-        services.AddHttpClient<CloudCallClient>()
+        services.AddHttpClient<ApiConnection>()
             .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(20))
             .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.WaitAndRetryAsync(new[] { TimeSpan.FromSeconds(3) }));
+
+        services.AddSingleton<ICloudCallClient, CloudCallClient>();
 
         return services;
     }
