@@ -1,13 +1,14 @@
+using ApiBureau.CloudCall.Api.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace ApiBureau.CloudCall.Api.Console.Services;
 
 public class DataService
 {
-    private readonly CloudCallClient _client;
+    private readonly ICloudCallClient _client;
     private readonly ILogger<DataService> _logger;
 
-    public DataService(CloudCallClient client, ILogger<DataService> logger)
+    public DataService(ICloudCallClient client, ILogger<DataService> logger)
     {
         _client = client;
         _logger = logger;

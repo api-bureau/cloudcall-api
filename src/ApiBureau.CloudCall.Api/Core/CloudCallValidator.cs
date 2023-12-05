@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ApiBureau.CloudCall.Api.Core;
 
-public static class CloudCallSettingsValidator
+public static class CloudCallValidator
 {
     private const string MissingSettings = "Settings are missing";
     private const string MissingBaseUrl = "BaseUrl in settings is missing or empty";
@@ -10,8 +10,9 @@ public static class CloudCallSettingsValidator
     private const string MissingUserName = "UserName in settings is missing or empty";
     private const string MissingPassword = "Password in settings is missing or empty";
     private const string MissingLicenceKey = "LicenseKey in settings is missing or empty";
+    private const string MissingAccessToken = "Access token is missing or invalid";
 
-    public static void Validate(CloudCallSettings settings, ILogger logger)
+    public static void ValidateSettings(CloudCallSettings settings, ILogger logger)
     {
         if (settings is null)
         {
@@ -54,5 +55,14 @@ public static class CloudCallSettingsValidator
 
             throw new ArgumentException(errorMessage, nameof(settings));
         }
+    }
+
+    public static void ValidateAccessToken(string? token, ILogger logger)
+    {
+        if (!string.IsNullOrWhiteSpace(token)) return;
+
+        logger.LogError("Access Token error: {error}", MissingAccessToken);
+
+        throw new InvalidOperationException(MissingAccessToken);
     }
 }

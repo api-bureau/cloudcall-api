@@ -28,11 +28,11 @@ public class ApiConnection
 
     public async Task AuthenticateAsync()
     {
-        CloudCallSettingsValidator.Validate(_settings, _logger);
+        CloudCallValidator.ValidateSettings(_settings, _logger);
 
         var request = new PasswordTokenRequest
         {
-            UserName = _settings.UserName,
+            UserName = _settings.UserName!,
             Password = _settings.Password,
             Address = _settings.LoginUrl,
             Parameters =
@@ -55,7 +55,9 @@ public class ApiConnection
 
         _accessToken = token.Json.GetProperty("data").TryGetString("token");
 
-        _client.SetBearerToken(_accessToken);
+        CloudCallValidator.ValidateAccessToken(_accessToken, _logger);
+
+        _client.SetBearerToken(_accessToken!);
     }
 
     public async Task<T?> GetAsync<T>(string url)
