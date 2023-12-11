@@ -12,6 +12,9 @@ public class ApiConnection
     private readonly CloudCallSettings _settings;
     private string? _accessToken;
     private const int _pageSize = 1000;
+    public const string UKAccount = "uk";
+    public const string USAccount = "us";
+    public const string AustaliaAccount = "au";
     //private DateTime? _tokenExpireTime;
     //private readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
     //{
@@ -24,12 +27,12 @@ public class ApiConnection
         _client = httpClient;
         _logger = logger;
         _client.DefaultRequestHeaders.Add("LicenseKey", _settings.LicenseKey);
+
+        CloudCallValidator.ValidateSettings(_settings, _logger);
     }
 
     public async Task AuthenticateAsync()
     {
-        CloudCallValidator.ValidateSettings(_settings, _logger);
-
         var request = new PasswordTokenRequest
         {
             UserName = _settings.UserName!,
@@ -93,5 +96,25 @@ public class ApiConnection
         {
             await AuthenticateAsync();
         }
+    }
+
+    public string? GetCountry()
+    {
+        if (_settings.BaseUrl is null) return null;
+
+        if (_settings.BaseUrl.Contains(".uk."))
+        {
+            return UKAccount;
+        }
+        else if (_settings.BaseUrl.Contains(".us."))
+        {
+            return USAccount;
+        }
+        else if (_settings.BaseUrl.Contains(".ua."))
+        {
+            return AustaliaAccount;
+        }
+
+        return null;
     }
 }

@@ -4,4 +4,5 @@ public interface ICloudCallClient
 {
     AccountEndpoint Accounts { get; }
     CallEndpoint Calls { get; }
+    string? Country { get; }
 }
