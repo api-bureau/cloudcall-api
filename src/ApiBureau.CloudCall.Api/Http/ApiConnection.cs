@@ -14,7 +14,7 @@ public class ApiConnection
     private const int _pageSize = 1000;
     public const string UKAccount = "uk";
     public const string USAccount = "us";
-    public const string AustaliaAccount = "au";
+    public const string AustraliaAccount = "au";
     //private DateTime? _tokenExpireTime;
     //private readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
     //{
@@ -56,7 +56,7 @@ public class ApiConnection
         // this is not working token.AccessToken;
         //_accessToken = token.AccessToken;
 
-        _accessToken = token.Json.GetProperty("data").TryGetString("token");
+        _accessToken = token.Json?.GetProperty("data").TryGetString("token");
 
         CloudCallValidator.ValidateAccessToken(_accessToken, _logger);
 
@@ -112,7 +112,7 @@ public class ApiConnection
         }
         else if (_settings.BaseUrl.Contains(".ua."))
         {
-            return AustaliaAccount;
+            return AustraliaAccount;
         }
 
         return null;
