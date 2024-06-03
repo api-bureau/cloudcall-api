@@ -11,8 +11,8 @@ namespace ApiBureau.CloudCall.Api.Core;
 public static class CloudCallValidator
 {
     private const string MissingSettings = "Settings are missing in the appsettings.json or secret.json";
-    private const string MissingBaseUrl = "Base Url in settings is missing or empty";
-    private const string MissingLoginUrl = "Login Url in settings is missing or empty";
+    private const string BaseUrlNotFound = "Base Url in settings is missing or empty";
+    private const string LoginUrlNotFound = "Login Url in settings is missing or empty";
     private const string MissingUserName = "Username in settings is missing or empty";
     private const string MissingPassword = "Password in settings is missing or empty";
     private const string MissingLicenceKey = "License key in settings is missing or empty";
@@ -37,12 +37,12 @@ public static class CloudCallValidator
 
         if (string.IsNullOrWhiteSpace(settings.BaseUrl))
         {
-            errors.AppendLine(MissingBaseUrl);
+            errors.AppendLine(BaseUrlNotFound);
         }
 
         if (string.IsNullOrWhiteSpace(settings.LoginUrl))
         {
-            errors.AppendLine(MissingLoginUrl);
+            errors.AppendLine(LoginUrlNotFound);
         }
 
         if (string.IsNullOrWhiteSpace(settings.UserName))
