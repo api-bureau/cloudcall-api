@@ -1,5 +1,5 @@
 # CloudCall Api
-The purpose of this project is to help you exploring CloudCall APIs and speed up your CloudCall APIs C# and .NET Core implementation.
+The purpose of this project is to help you exploring CloudCall APIs and speed up your CloudCall APIs C# and .NET implementation.
 
 ## Contributors
 This project adheres following guidelines.
