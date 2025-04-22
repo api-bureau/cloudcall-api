@@ -39,7 +39,7 @@ public class ContactDto
     public string? DeepLinkUrl { get; set; }
     //public bool ReadOnly { get; set; }
     public string? CrmObjectInstanceId { get; set; }
-    public int CrmEntityMappingId { get; set; }
+    public int? CrmEntityMappingId { get; set; }
     public string? CrmEntityName { get; set; }
     public string? CrmProductName { get; set; }
 }
