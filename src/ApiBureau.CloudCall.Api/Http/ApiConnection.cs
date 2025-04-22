@@ -73,6 +73,8 @@ public class ApiConnection
         }
         catch (JsonException e) when (e.Data.Count == 0)
         {
+            _logger.LogError(e, "Failed to deserialize response from CloudCall API.");
+
             return default;
         }
         catch (Exception)
