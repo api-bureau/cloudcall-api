@@ -10,11 +10,15 @@ public class ApiConnection
     private readonly HttpClient _client;
     private readonly ILogger<ApiConnection> _logger;
     private readonly CloudCallSettings _settings;
+
     private string? _accessToken;
     private const int _pageSize = 1000;
+    private const string JsonTokenErrorMessageNoData = "The input does not contain any JSON tokens";
+
     public const string UKAccount = "uk";
     public const string USAccount = "us";
     public const string AustraliaAccount = "au";
+
     //private DateTime? _tokenExpireTime;
     //private readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
     //{
@@ -71,9 +75,16 @@ public class ApiConnection
         {
             return await _client.GetFromJsonAsync<T>($"{_settings.BaseUrl}/customers/{_settings.UserName}/{url}");
         }
-        catch (JsonException e) when (e.Data.Count == 0)
+        catch (JsonException e)
         {
-            _logger.LogError(e, "Failed to deserialize response from CloudCall API.");
+            if (e.Message.Contains(JsonTokenErrorMessageNoData))
+            {
+                _logger.LogWarning("Warning: No data returned from CloudCall API. URL: {Url}", url);
+            }
+            else
+            {
+                _logger.LogError(e, "Failed to deserialize response from CloudCall API. URL: {Url}", url);
+            }
 
             return default;
         }
