@@ -65,6 +65,7 @@ public static class CloudCallValidator
             var errorMessage = errors.ToString().TrimEnd();
 
             logger.LogError("Settings validation errors: {errors}", errorMessage);
+
             throw new ArgumentException(errorMessage, nameof(settings));
         }
     }
@@ -80,6 +81,7 @@ public static class CloudCallValidator
         if (!string.IsNullOrWhiteSpace(token)) return;
 
         logger.LogError("Access Token error: {error}", MissingAccessToken);
+
         throw new InvalidOperationException(MissingAccessToken);
     }
 }
