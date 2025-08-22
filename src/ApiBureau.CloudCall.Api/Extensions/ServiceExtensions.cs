@@ -12,7 +12,7 @@ public static class ServiceExtensions
 
         services.AddHttpClient<ApiConnection>()
             .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(20))
-            .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.WaitAndRetryAsync(new[] { TimeSpan.FromSeconds(3) }));
+            .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.WaitAndRetryAsync([TimeSpan.FromSeconds(3)]));
 
         services.AddSingleton<ICloudCallClient, CloudCallClient>();
 
