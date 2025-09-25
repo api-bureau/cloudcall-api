@@ -79,7 +79,7 @@ public class ApiConnection
         {
             if (e.Message.Contains(JsonTokenErrorMessageNoData))
             {
-                _logger.LogWarning("Warning: No data returned from CloudCall API. URL: {Url}", url);
+                _logger.LogInformation("Warning: No data returned from CloudCall API. URL: {Url}", url);
             }
             else
             {
